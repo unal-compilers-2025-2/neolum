@@ -98,9 +98,13 @@ npm run build
 Convierte expresiones regulares en NFA-λ mediante fragmentos básicos:
 
 - **Símbolo básico**: Crea dos estados con una transición
+ ![aut1]( https://github.com/unal-compilers-2025-2/neolum/blob/main/aut1.png)
 - **Concatenación**: Conecta fragmentos con transiciones λ
-- **Unión**: Crea estados iniciales/finales con bifurcaciones λ
+  ![aut2]( https://github.com/unal-compilers-2025-2/neolum/blob/main/aut2.png)
+- **Unión**: Crea estados iniciales/finales con bifurcaciones
+  ![aut3]( https://github.com/unal-compilers-2025-2/neolum/blob/main/aut3.png)
 - **Clausura de Kleene**: Añade bucles y transiciones opcionales λ
+  ![aut4]( https://github.com/unal-compilers-2025-2/neolum/blob/main/aut4.png)
 
 ### 2. Eliminación de Épsilon
 
