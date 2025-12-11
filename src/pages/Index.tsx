@@ -63,6 +63,20 @@ const Index = () => {
         }
       }
     }
+    for (let i = 0; i + 1 < sn; ++i) {
+      if (regex[i] == 'λ' && regex[i + 1] == '*') {
+        throwInvalidRegex();
+        return;
+      }
+      if (regex[i] == 'λ' && regex[i + 1] == '+') {
+        throwInvalidRegex();
+        return;
+      }
+      if (regex[i] == 'λ' && regex[i + 1] == '?') {
+        throwInvalidRegex();
+        return;
+      }
+    }
     // - - - - 
 
     try {
