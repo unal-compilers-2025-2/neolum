@@ -17,7 +17,54 @@ const Index = () => {
   const [nfa, setNfa] = useState<Automaton | null>(null);
   const [dfa, setDfa] = useState<Automaton | null>(null);
 
+  const throwInvalidRegex = () => {
+    toast.error('Expresión regular inválida', {
+      description: 'La expresión regular ingresada no es válida.',
+    });
+  };
+
+  const clean_spaces = (str: string) => {
+    return str.replace(/\s+/g, '');
+  };
+
   const handleRegexSubmit = (regex: string) => {
+    // Check if string is valid regex
+    regex = clean_spaces(regex);
+    // - - - - Validations - - - -
+    let parenthesis_cnt = 0;
+    for (const c of regex) {
+      if (c === '(') {
+        parenthesis_cnt++;
+      } else if (c === ')') {
+        parenthesis_cnt--;
+        if (parenthesis_cnt < 0) {
+          throwInvalidRegex();
+          return;
+        }
+      }
+    }
+    if (parenthesis_cnt > 0) {
+      throwInvalidRegex();
+      return;
+    }
+    const prev_invalid_symbols = new Set(['*', '+', '?', '|', '(']);
+    const sn = regex.length;
+    for (let i = 0; i < sn - 1; ++i) {
+      if (regex[i] === '(' && regex[i + 1] === ')') {
+        throwInvalidRegex();
+        return;
+      }
+    }
+    for (let i = 0; i < sn; ++i) {
+      if (regex[i] === '*' || regex[i] === '+' || regex[i] === '?' || regex[i] === '|') {
+        if (i === 0 || prev_invalid_symbols.has(regex[i - 1])) {
+          throwInvalidRegex();
+          return;
+        }
+      }
+    }
+    // - - - - 
+
     try {
       const nfaL = regexToNFALambda(regex);
       const nfaResult = nfaLambdaToNFA(nfaL);
